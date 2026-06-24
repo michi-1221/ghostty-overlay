@@ -21,6 +21,41 @@
   </p>
 </p>
 
+## 👻 Ghostty Overlay (this fork)
+
+This is a personal fork of [Ghostty](https://github.com/ghostty-org/ghostty)
+that adds a **background-control overlay mode** on macOS. Toggle the terminal
+into a transparent, always-on-top, click-through window so it floats over your
+other apps as a glanceable overlay — then toggle back to a normal, interactive
+terminal.
+
+### Setup
+
+1. Enable it in your config and pick an opacity (the overlay reuses
+   `background-opacity`, which must be `< 1` to be visible):
+
+   ```
+   background-control = true
+   background-opacity = 0.85
+   ```
+
+2. Bind the toggle. Use a `global:` keybind so you can turn it off even while
+   the window is click-through:
+
+   ```
+   keybind = global:cmd+backquote=toggle_background_control
+   ```
+
+3. Press the bound key to flip overlay mode on and off.
+
+> [!NOTE]
+> Click-through makes the window non-interactive while the overlay is on. To
+> recover, activate Ghostty from the Dock and press the bound key again.
+
+Everything below is the upstream Ghostty README.
+
+---
+
 ## About
 
 Ghostty is a terminal emulator that differentiates itself by being

@@ -80,10 +80,10 @@ struct AboutView: View {
 
             VStack(alignment: .center, spacing: 32) {
                 VStack(alignment: .center, spacing: 8) {
-                    Text("Ghostty 👻")
+                    Text("Ghostty Overlay 👻")
                         .bold()
                         .font(.title)
-                    Text("My personal overlay build 👻\nビルド成功！⌘R が効いてる。")
+                    Text("透過・最前面・クリックスルーの\nオーバーレイモードを追加した個人フォーク。")
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                         .font(.caption)
