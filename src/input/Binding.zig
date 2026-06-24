@@ -864,6 +864,23 @@ pub const Action = union(enum) {
     /// Only implemented on macOS.
     toggle_background_opacity,
 
+    /// Toggle "background control" overlay mode. When enabled, this makes
+    /// all windows transparent, floating (always-on-top), and click-through
+    /// (mouse events pass to whatever is behind). Toggling again restores the
+    /// normal opaque, interactive, normal-level state.
+    ///
+    /// This does nothing unless the `background-control` configuration is set
+    /// to true. The transparency reuses `background-opacity`, which must be
+    /// less than 1 to be visible.
+    ///
+    /// Because click-through makes the window non-interactive, this is best
+    /// used with a `global:` keybind so it can be toggled off from another
+    /// application. You can always recover by activating Ghostty from the Dock
+    /// and pressing the bound key.
+    ///
+    /// Only implemented on macOS.
+    toggle_background_control,
+
     /// Check for updates.
     ///
     /// Only implemented on macOS.
@@ -1338,6 +1355,7 @@ pub const Action = union(enum) {
             .quit,
             .toggle_quick_terminal,
             .toggle_visibility,
+            .toggle_background_control,
             .check_for_updates,
             .show_gtk_inspector,
             => .app,

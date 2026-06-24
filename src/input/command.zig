@@ -713,6 +713,7 @@ fn actionCommands(action: Action.Key) []const Command {
         .toggle_command_palette,
         .toggle_quick_terminal,
         .toggle_visibility,
+        .toggle_background_control,
         .previous_tab,
         .next_tab,
         .last_tab,

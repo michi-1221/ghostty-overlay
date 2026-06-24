@@ -125,6 +125,10 @@ pub const Action = union(Key) {
     /// it between fully opaque and the configured background opacity.
     toggle_background_opacity,
 
+    /// Toggle "background control" overlay mode (transparent + floating +
+    /// click-through). Gated behind the `background-control` config.
+    toggle_background_control,
+
     /// Moves a tab by a relative offset.
     ///
     /// Adjusts the tab position based on `offset` (e.g., -1 for left, +1
@@ -363,6 +367,7 @@ pub const Action = union(Key) {
         toggle_command_palette,
         toggle_visibility,
         toggle_background_opacity,
+        toggle_background_control,
         move_tab,
         goto_tab,
         goto_split,

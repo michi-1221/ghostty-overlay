@@ -599,6 +599,9 @@ extension Ghostty {
             case GHOSTTY_ACTION_TOGGLE_BACKGROUND_OPACITY:
                 toggleBackgroundOpacity(app, target: target)
 
+            case GHOSTTY_ACTION_TOGGLE_BACKGROUND_CONTROL:
+                toggleBackgroundControl(app, target: target)
+
             case GHOSTTY_ACTION_KEY_SEQUENCE:
                 keySequence(app, target: target, v: action.action.key_sequence)
 
@@ -1570,6 +1573,15 @@ extension Ghostty {
             default:
                 assertionFailure()
             }
+        }
+
+        private static func toggleBackgroundControl(
+            _ app: ghostty_app_t,
+            target: ghostty_target_s
+        ) {
+            // This is an app-scoped action: overlay mode is app-global state.
+            guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else { return }
+            appDelegate.toggleBackgroundControl()
         }
 
         private static func toggleSecureInput(

@@ -1029,6 +1029,28 @@ class BaseTerminalController: NSWindowController,
         // it virtually from here.
     }
 
+    /// Apply the app-global "background control" overlay state to this window.
+    ///
+    /// This is declarative: the window's transparency, level, and mouse
+    /// behavior are derived entirely from whether overlay mode is currently
+    /// active. There is no saved/restored state — toggling simply recomputes.
+    ///
+    /// Opt-in via the `background-control` config; does nothing otherwise so
+    /// default behavior is preserved.
+    func syncBackgroundControl() {
+        guard ghostty.config.backgroundControl else { return }
+        guard let window else { return }
+        let active = (NSApplication.shared.delegate as? AppDelegate)?.backgroundControlActive ?? false
+
+        // Derive everything from the single app-global active flag:
+        //  - active:   transparent (honors background-opacity < 1), floating, click-through
+        //  - inactive: opaque, normal level, interactive
+        isBackgroundOpaque = !active
+        window.level = active ? .floating : .normal
+        window.ignoresMouseEvents = active
+        syncAppearance()
+    }
+
     // MARK: Fullscreen
 
     /// Toggle fullscreen for the given mode.

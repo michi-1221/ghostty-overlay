@@ -1126,6 +1126,11 @@ class TerminalController: BaseTerminalController, TabGroupCloseCoordinator.Contr
         // apply this based on the root config but change it later based on surface
         // config (see focused surface change callback).
         syncAppearance(.init(config))
+
+        // Derive the initial "background control" overlay state for this new
+        // window (e.g. start opaque when overlay mode is inactive). No-op unless
+        // the background-control config is enabled.
+        syncBackgroundControl()
     }
 
     /// Setup correct window frame before showing the window

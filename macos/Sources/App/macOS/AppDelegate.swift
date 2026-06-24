@@ -98,6 +98,11 @@ class AppDelegate: NSObject,
     /// The ghostty global state. Only one per process.
     let ghostty: Ghostty.App
 
+    /// Whether "background control" overlay mode is currently active. This is
+    /// app-global state shared by all terminal windows (see
+    /// `toggleBackgroundControl`).
+    private(set) var backgroundControlActive: Bool = false
+
     /// The global undo manager for app-level state such as window restoration.
     lazy var undoManager = ExpiringUndoManager()
 
@@ -977,6 +982,30 @@ class AppDelegate: NSObject,
 
     @IBAction func toggleQuickTerminal(_ sender: Any) {
         quickController.toggle()
+    }
+
+    /// Toggle "background control" (overlay) mode for all terminal windows:
+    /// transparent + always-on-top (floating) + click-through. This is opt-in
+    /// via the `background-control` config and does nothing when that is
+    /// disabled, preserving default behavior.
+    func toggleBackgroundControl() {
+        guard ghostty.config.backgroundControl else { return }
+        backgroundControlActive.toggle()
+        let controllers = NSApplication.shared.windows.compactMap {
+            $0.windowController as? BaseTerminalController
+        }
+        for controller in controllers {
+            controller.syncBackgroundControl()
+        }
+
+        // When leaving overlay mode, return focus to Ghostty so the user can
+        // type immediately without having to click. (Going opaque is already
+        // handled by syncBackgroundControl above.) On enter we intentionally
+        // leave focus where it is so they can keep working behind the overlay.
+        if !backgroundControlActive {
+            NSApp.activate(ignoringOtherApps: true)
+            controllers.first?.window?.makeKeyAndOrderFront(nil)
+        }
     }
 
     /// Toggles visibility of all Ghosty Terminal windows. When hidden, activates Ghostty as the frontmost application

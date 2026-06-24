@@ -1018,6 +1018,26 @@ palette: Palette = .{},
 /// Available since: 1.2.0
 @"background-opacity-cells": bool = false,
 
+/// Enables "background control" overlay mode, toggled with the
+/// `toggle_background_control` keybind action.
+///
+/// When this is `true`, `toggle_background_control` makes all windows
+/// transparent, always-on-top (floating), and click-through (mouse events
+/// pass to whatever is behind the window); toggling again restores the
+/// normal opaque, interactive state. The transparency reuses
+/// `background-opacity`, which must be less than 1 to be visible.
+///
+/// When `false` (the default), `toggle_background_control` does nothing,
+/// preserving Ghostty's default behavior.
+///
+/// Because click-through makes the window non-interactive, bind the toggle
+/// to a `global:` keybind so it can be turned off from another application.
+/// You can always recover by activating Ghostty from the Dock and pressing
+/// the bound key.
+///
+/// Only implemented on macOS.
+@"background-control": bool = false,
+
 /// Whether to blur the background when `background-opacity` is less than 1.
 ///
 /// Valid values are:
